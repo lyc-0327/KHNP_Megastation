@@ -1,4 +1,4 @@
-import BaseNode from '../BaseNode.jsx'
+import BaseNode from './BaseNode.jsx'
 
 function Icon() {
   return (
