@@ -1,23 +1,20 @@
-import { useEffect, useState } from 'react'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { useState } from 'react'
+import TopBar from './components/TopBar.jsx'
+import LeftSidebar from './components/LeftSidebar.jsx'
+import FlowCanvas from './components/FlowCanvas.jsx'
+import Palette from './components/Palette.jsx'
 
 export default function App() {
-  const [status, setStatus] = useState('checking...')
-
-  useEffect(() => {
-    fetch(`${API_URL}/health`)
-      .then((res) => res.json())
-      .then((data) => setStatus(data.status))
-      .catch(() => setStatus('unreachable'))
-  }, [])
+  const [mode, setMode] = useState('select')
 
   return (
-    <div style={{ fontFamily: 'sans-serif', padding: '2rem' }}>
-      <h1>H2 Platform</h1>
-      <p>
-        Backend: <strong>{status}</strong>
-      </p>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+      <TopBar mode={mode} />
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+        <LeftSidebar mode={mode} setMode={setMode} />
+        <FlowCanvas mode={mode} />
+      </div>
+      <Palette />
     </div>
   )
 }

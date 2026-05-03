@@ -1,0 +1,87 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #141414;
+}
+
+/* ── React Flow canvas background ── */
+.react-flow {
+  background: #1e1e1e;
+}
+
+/* ── React Flow handles ── */
+.react-flow__handle {
+  width: 8px !important;
+  height: 8px !important;
+  background: #4a9eff !important;
+  border: 2px solid #252525 !important;
+  transition: transform 0.1s ease;
+}
+
+.react-flow__handle:hover {
+  transform: scale(1.5);
+}
+
+/* Connect mode: make handles more prominent */
+.connect-mode .react-flow__handle {
+  width: 13px !important;
+  height: 13px !important;
+  opacity: 1;
+}
+
+/* ── Edges ── */
+.react-flow__edge-path {
+  stroke: #334155;
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: #4a9eff;
+}
+
+/* ── Selection box ── */
+.react-flow__selection {
+  background: rgba(74, 158, 255, 0.04);
+  border: 1.5px dashed #4a9eff;
+  border-radius: 2px;
+}
+
+/* ── Controls ── */
+.react-flow__controls {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #334155;
+}
+
+.react-flow__controls-button {
+  background: #1E293B !important;
+  border: none !important;
+  border-bottom: 1px solid #334155 !important;
+  fill: #94A3B8 !important;
+}
+
+.react-flow__controls-button:hover {
+  background: #334155 !important;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none !important;
+}
+
+/* ── Attribution ── */
+.react-flow__attribution {
+  background: transparent;
+  color: #334155;
+}
+
+.react-flow__attribution a {
+  color: #475569;
+}
