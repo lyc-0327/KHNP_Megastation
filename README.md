@@ -1,14 +1,14 @@
-# H2 Platform
+# KHNP Megastation
 
-React + FastAPI + PostgreSQL 기반 사내 웹 플랫폼.
+React + FastAPI + PostgreSQL 기반 웹 플랫폼.
 
 ## 서비스 구성
 
-| 서비스 | 포트 | 설명 |
-|--------|------|------|
-| frontend | 5173 | React + Vite |
-| backend | 8000 | FastAPI |
-| db | 5432 | PostgreSQL 16 |
+| 서비스   | 포트 | 설명            |
+|----------|------|-----------------|
+| frontend | 5173 | React + Vite    |
+| backend  | 8000 | FastAPI         |
+| db       | 5432 | PostgreSQL 16   |
 
 ## 새 컴퓨터에서 시작하기
 
@@ -19,8 +19,8 @@ React + FastAPI + PostgreSQL 기반 사내 웹 플랫폼.
 ### 실행 절차
 
 ```bash
-git clone <repo-url>
-cd h2-platform
+git clone https://github.com/lyc-0327/KHNP_Megastation.git
+cd KHNP_Megastation
 
 cp .env.example .env
 # .env 파일을 열어 POSTGRES_PASSWORD 등을 수정
@@ -36,8 +36,8 @@ docker compose up --build
 ### 종료
 
 ```bash
-docker compose down          # 컨테이너만 종료 (DB 데이터 유지)
-docker compose down -v       # 컨테이너 + 볼륨 삭제 (DB 초기화)
+docker compose down        # 컨테이너만 종료 (DB 데이터 유지)
+docker compose down -v     # 컨테이너 + 볼륨 삭제 (DB 초기화)
 ```
 
 ## 개발 중 자주 쓰는 명령
@@ -57,13 +57,16 @@ docker compose exec db psql -U h2user -d h2platform
 ## 폴더 구조
 
 ```
-h2-platform/
-├── frontend/       # React + Vite
-├── backend/        # FastAPI
+KHNP_Megastation/
+├── frontend/            # React + Vite
+│   ├── Dockerfile
+│   └── src/
+├── backend/             # FastAPI
+│   ├── Dockerfile
 │   └── app/
 │       └── main.py
-├── docs/           # 설계 문서
-├── deploy/         # nginx/caddy 배포 설정 (추후 추가)
+├── docs/                # 설계 문서
+├── deploy/              # 배포 설정 (추후 추가)
 ├── docker-compose.yml
 ├── .env.example
 └── .gitignore
@@ -71,4 +74,4 @@ h2-platform/
 
 ## 배포 (추후)
 
-`deploy/` 폴더에 nginx 또는 caddy 설정을 추가해 사내망 서버에 배포할 예정.
+`deploy/` 폴더에 nginx 또는 caddy 설정을 추가해 서버에 배포할 예정.
