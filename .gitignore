@@ -25,3 +25,6 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Large raw shapefiles (too large for GitHub — converted GeoJSON is in frontend/public/)
+Korea boundary map/
