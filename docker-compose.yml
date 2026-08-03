@@ -42,6 +42,23 @@ services:
       - ./frontend:/app
       - /app/node_modules
 
+  osrm:
+    image: ghcr.io/project-osrm/osrm-backend:v5.27.1
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data/osrm:/data
+    entrypoint: ["sh", "-c"]
+    command:
+      - >
+        if [ -f /data/south-korea-latest.osrm.properties ]; then
+          exec osrm-routed --algorithm mld --max-table-size 10000000 /data/south-korea-latest.osrm;
+        else
+          echo 'OSRM 데이터 없음. scripts/setup-osrm.ps1 을 먼저 실행하세요.';
+          sleep infinity;
+        fi
+
   nginx:
     image: nginx:alpine
     restart: unless-stopped

@@ -23,8 +23,8 @@ function PaletteCard({ item }) {
         padding: '8px 10px 6px',
         width: 88,
         borderRadius: 8,
-        background: hovered ? '#0F172A' : 'transparent',
-        border: `1px solid ${hovered ? item.color : '#1E293B'}`,
+        background: hovered ? 'var(--hover-bg)' : 'transparent',
+        border: `1px solid ${hovered ? item.color : 'var(--border-mid)'}`,
         cursor: 'grab',
         transition: 'all 0.15s ease',
         transform: hovered ? 'translateY(-3px)' : 'none',
@@ -35,7 +35,7 @@ function PaletteCard({ item }) {
       {/* Color accent line */}
       <div style={{
         width: '100%', height: 2, borderRadius: 1,
-        background: hovered ? item.color : '#334155',
+        background: hovered ? item.color : 'var(--border-dim)',
         transition: 'background 0.15s',
         marginBottom: 4,
       }} />
@@ -49,7 +49,7 @@ function PaletteCard({ item }) {
 
       <span style={{
         fontSize: 10, fontWeight: 500,
-        color: hovered ? '#E2E8F0' : '#64748B',
+        color: hovered ? 'var(--text-bright)' : 'var(--text-mid)',
         whiteSpace: 'nowrap', letterSpacing: 0.3,
         transition: 'color 0.15s',
         textAlign: 'center',
@@ -64,8 +64,8 @@ export default function Palette() {
   return (
     <div style={{
       height: 118,
-      background: '#1E293B',
-      borderTop: '1px solid #334155',
+      background: 'var(--bg-palette)',
+      borderTop: '1px solid var(--border-dim)',
       display: 'flex',
       alignItems: 'center',
       padding: '0 20px',
@@ -75,12 +75,12 @@ export default function Palette() {
       <div style={{
         display: 'flex', flexDirection: 'column', gap: 2,
         marginRight: 14, flexShrink: 0,
-        borderRight: '1px solid #334155', paddingRight: 14,
+        borderRight: '1px solid var(--border-dim)', paddingRight: 14,
       }}>
-        <span style={{ fontSize: 9, fontWeight: 700, color: '#475569', letterSpacing: 1.2, textTransform: 'uppercase' }}>
+        <span style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-dim)', letterSpacing: 1.2, textTransform: 'uppercase' }}>
           장치
         </span>
-        <span style={{ fontSize: 9, fontWeight: 700, color: '#475569', letterSpacing: 1.2, textTransform: 'uppercase' }}>
+        <span style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-dim)', letterSpacing: 1.2, textTransform: 'uppercase' }}>
           팔레트
         </span>
       </div>

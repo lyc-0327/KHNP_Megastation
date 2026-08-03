@@ -4,15 +4,45 @@
   padding: 0;
 }
 
+/* ── Theme tokens ────────────────────────────────────────────────────── */
+
+:root {
+  --bg-topbar:   #0F172A;
+  --bg-sidebar:  #0F172A;
+  --bg-palette:  #1E293B;
+  --bg-canvas:   #141414;
+  --bg-dot:      #2d3748;
+  --border-mid:  #1E293B;
+  --border-dim:  #334155;
+  --text-bright: #F1F5F9;
+  --text-mid:    #64748B;
+  --text-dim:    #475569;
+  --hover-bg:    #1E293B;
+}
+
+[data-theme="light"] {
+  --bg-topbar:   #FFFFFF;
+  --bg-sidebar:  #F8FAFC;
+  --bg-palette:  #FFFFFF;
+  --bg-canvas:   #EFF2F7;
+  --bg-dot:      #b0bac8;
+  --border-mid:  #E2E8F0;
+  --border-dim:  #CBD5E1;
+  --text-bright: #0F172A;
+  --text-mid:    #64748B;
+  --text-dim:    #94A3B8;
+  --hover-bg:    #F1F5F9;
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
-  background: #141414;
+  background: var(--bg-canvas);
 }
 
 /* ── React Flow canvas background ── */
 .react-flow {
-  background: #1e1e1e;
+  background: var(--bg-canvas);
 }
 
 /* ── React Flow handles ── */
@@ -32,6 +62,12 @@ body {
 .connect-mode .react-flow__handle {
   width: 13px !important;
   height: 13px !important;
+  opacity: 1;
+}
+
+/* ── Always-visible number spinners ── */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
   opacity: 1;
 }
 

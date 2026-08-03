@@ -19,6 +19,15 @@ function SetupIcon() {
   )
 }
 
+function ResetIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+      <path d="M2 7a5 5 0 1 0 1.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <polyline points="2,3.5 2,7 5.5,7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 function TrashIcon() {
   return (
     <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
@@ -35,45 +44,42 @@ const itemBase = {
   textAlign: 'left', transition: 'background 0.1s',
 }
 
-export default function ContextMenu({ node, x, y, onSetup, onDelete, onClose }) {
+export default function ContextMenu({ node, x, y, onSetup, onResetPosition, onDelete, onClose }) {
   const ref = useRef()
 
   useEffect(() => {
-    const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) onClose()
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
+    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose() }
+    document.addEventListener('mousedown', h)
+    return () => document.removeEventListener('mousedown', h)
   }, [onClose])
 
   useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
+    const h = (e) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', h)
+    return () => document.removeEventListener('keydown', h)
   }, [onClose])
 
   const meta = TYPE_META[node.type] ?? { label: node.type, color: '#3B82F6' }
+  const hasOriginalPos = !!node.data?.originalPosition
 
-  const W = 160, H = 104
+  const W = 168
+  const estimatedH = 40 + 36 + 1 + 36 + (hasOriginalPos ? 36 + 1 : 0) + 1 + 36
   const left = x + W > window.innerWidth  ? x - W : x
-  const top  = y + H > window.innerHeight ? y - H : y
+  const top  = y + estimatedH > window.innerHeight ? y - estimatedH : y
 
   return (
-    <div
-      ref={ref}
-      style={{
-        position: 'fixed', top, left,
-        zIndex: 9999,
-        background: '#1E293B',
-        border: '1px solid #334155',
-        borderRadius: 7,
-        boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-        overflow: 'hidden',
-        width: W,
-        userSelect: 'none',
-        fontFamily: 'system-ui, sans-serif',
-      }}
-    >
+    <div ref={ref} style={{
+      position: 'fixed', top, left,
+      zIndex: 9999,
+      background: '#1E293B',
+      border: '1px solid #334155',
+      borderRadius: 7,
+      boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+      overflow: 'hidden',
+      width: W,
+      userSelect: 'none',
+      fontFamily: 'system-ui, sans-serif',
+    }}>
       {/* Node type header */}
       <div style={{
         padding: '7px 14px',
@@ -82,29 +88,38 @@ export default function ContextMenu({ node, x, y, onSetup, onDelete, onClose }) 
         display: 'flex', alignItems: 'center', gap: 7,
         fontSize: 11, fontWeight: 600, color: meta.color,
       }}>
-        <span style={{ width: 6, height: 6, borderRadius: '50%', background: meta.color, display: 'inline-block', flexShrink: 0 }} />
+        <span style={{ width:6, height:6, borderRadius:'50%', background:meta.color, display:'inline-block', flexShrink:0 }} />
         {meta.label}
       </div>
 
       {/* Setup */}
-      <button
-        style={{ ...itemBase, color: '#CBD5E1' }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = '#334155')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-        onClick={() => { onSetup(); onClose() }}
-      >
+      <button style={{ ...itemBase, color: '#CBD5E1' }}
+        onMouseEnter={e => (e.currentTarget.style.background='#334155')}
+        onMouseLeave={e => (e.currentTarget.style.background='transparent')}
+        onClick={() => { onSetup(); onClose() }}>
         <SetupIcon /> Setup
       </button>
 
-      <div style={{ height: 1, background: '#334155', margin: '0 10px' }} />
+      {/* 원래 위치로 — only shown when original position was recorded */}
+      {hasOriginalPos && (
+        <>
+          <div style={{ height:1, background:'#334155', margin:'0 10px' }} />
+          <button style={{ ...itemBase, color: '#94A3B8' }}
+            onMouseEnter={e => (e.currentTarget.style.background='#334155')}
+            onMouseLeave={e => (e.currentTarget.style.background='transparent')}
+            onClick={() => { onResetPosition(node.id); onClose() }}>
+            <ResetIcon /> 원래 위치로
+          </button>
+        </>
+      )}
+
+      <div style={{ height:1, background:'#334155', margin:'0 10px' }} />
 
       {/* Delete */}
-      <button
-        style={{ ...itemBase, color: '#F87171' }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = '#3B1515')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-        onClick={() => { onDelete(); onClose() }}
-      >
+      <button style={{ ...itemBase, color: '#F87171' }}
+        onMouseEnter={e => (e.currentTarget.style.background='#3B1515')}
+        onMouseLeave={e => (e.currentTarget.style.background='transparent')}
+        onClick={() => { onDelete(); onClose() }}>
         <TrashIcon /> Delete
       </button>
     </div>
